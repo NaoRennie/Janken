@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width">
+<script src="js/jquery-2.1.3.min.js"></script>
+<link rel="stylesheet" href="css/sample.css">
+<title>じゃんけん</title>
+</head>
+<body>
+<main>
+  <div id="main">
+    <div id="resultimg"></div>
+    <div id="slideshow">
+        <img src="img/gu.jpeg" alt="gu" class="slideshow-content">
+        <img src="img/cho.jpeg" alt="choki" class="slideshow-content">
+        <img src="img/pa.jpeg" alt="par" class="slideshow-content">
+    </div>
+    <ul>
+      <li id="gu_btn" id="hum_btn" ><img src="img/gu.jpeg"></li>
+      <li id="cho_btn" id="hum_btn" ><img src="img/cho.jpeg"></li>
+      <li id="par_btn" id="hum_btn "><img src="img/pa.jpeg"></li>
+    </ul>
+    <div class="sentence">JUDGE</div>
+    <div id="judgment" class="sentence"></div>
+    <div class="sentence">SCORE<span id="winnum">0</span></div>
+    <div id="start-btn">START</div>  
+  </div>
+</main>
+</body>
+<script>
+//じゃんけん用のSCRIPTを書いてください
+
+let pc = "#pc_hands";
+let jud = "#judgment";
+let winnum = "#winnum";
+
+let win = "勝ち";
+let drw = "あいこ";
+let lose = "負け";
+
+let cho = "チョキ";
+let gu = "グー";
+let par = "パー";
+
+let humHand = '';
+let comHand = '';
+let result = '';
+let wincon = 0;
+let main = $('#main')
+
+// スライド
+
+$(function (){
+  $('#slideshow').each(function(){
+    var $slides = $(this).find('img'),
+        slideCount = $slides.length,
+        currentIndex = 0;
+
+    $slides.eq(currentIndex).fadeIn();
+    setInterval(showNextSlide, 200);
+      
+    function showNextSlide(){
+        var nextIndex = (currentIndex + 1) % slideCount;
+        $slides.eq(currentIndex).fadeOut();
+        $slides.eq(nextIndex).fadeIn();
+        currentIndex = nextIndex;
+    }
+  })
+})
+
+
+
+$('#gu_btn').on('click', function(){
+  $('#main').css('background-color','#98FB90');
+  $('#resultimg').empty();
+  let num = Math.ceil(Math.random() * 3);
+  if(num==1){
+    $(pc).html('グー');
+    $(jud).html('<img src="img/引き分け.jpeg">');
+    $('#slideshow').hide(10);
+    $('#resultimg').prepend('<img src ="img/gu.jpeg">');
+  }
+  if(num==2){
+    $(pc).html('チョキ');
+    $(jud).html('<img src="img/勝ち.jpeg">');
+    $('#slideshow').hide(10);
+    $('#resultimg').prepend('<img src ="img/cho.jpeg">');
+    wincon = wincon + 1;
+    $(winnum).html(wincon);
+    $('#main').css('background-color', '#F08080');
+  }
+  if(num==3){
+    $(pc).html('パー');
+    $(jud).html('<img src="img/負け.jpeg">');
+    $('#slideshow').hide(10);
+    $('#resultimg').prepend('<img src ="img/pa.jpeg">');
+  }
+});
+
+
+$('#cho_btn').on('click', function(){
+  $('#main').css('background-color','#98FB90');
+  $('#resultimg').empty();
+  let num = Math.ceil(Math.random() * 3);
+  if(num==1){
+    $(pc).html('グー');
+    $(jud).html('<img src="img/負け.jpeg">');
+    $('#slideshow').hide(10);
+    $('#resultimg').prepend('<img src ="img/gu.jpeg">');
+  }
+  if(num==2){
+    $(pc).html('チョキ');
+    $(jud).html('<img src="img/引き分け.jpeg">');
+    $('#slideshow').hide(10);
+    $('#resultimg').prepend('<img src ="img/cho.jpeg">');
+  }
+  if(num==3){
+    $(pc).html('パー');
+    $(jud).html('<img src="img/勝ち.jpeg">');
+    $('#slideshow').hide(10);
+    $('#resultimg').prepend('<img src ="img/pa.jpeg">');
+    wincon = wincon + 1;
+    $(winnum).html(wincon);
+    $('#main').css('background-color', '#F08080');
+  }
+});
+
+$('#par_btn').on('click', function(){
+  $('#main').css('background-color','#98FB90');
+  $('#resultimg').empty();
+  let num = Math.ceil(Math.random() * 3);
+  if(num==1){
+    $(pc).html('グー');
+    $(jud).html('<img src="img/勝ち.jpeg">');
+    $('#slideshow').hide(10);
+    $('#resultimg').prepend('<img src ="img/gu.jpeg">');
+    wincon = wincon + 1;
+    $(winnum).html(wincon);
+    $('#main').css('background-color', '#F08080');
+  }
+  if(num==2){
+    $(pc).html('チョキ');
+    $(jud).html('<img src="img/負け.jpeg">');
+    $('#slideshow').hide(10);
+    $('#resultimg').prepend('<img src ="img/cho.jpeg">');
+  }
+  if(num==3){
+    $(pc).html('パー');
+    $(jud).html('<img src="img/引き分け.jpeg">');
+    $('#slideshow').hide(10);
+    $('#resultimg').prepend('<img src ="img/pa.jpeg">');
+  }
+});
+
+$('#start-btn').on('click', function(){
+  $('#main').css('background-color','#98FB90');
+  $('#slideshow').show(10);
+  $('#resultimg').empty();
+})
+
+$('#save-btn').on('click',function(){
+  const win = $(winnum).val();
+  localStorage.setItem('total_win',winnum);
+  alert("saveしました");
+});
+
+</script>
+</html>
